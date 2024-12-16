@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="AboutPage.css">
+    <title>About Me</title>
+</head>
+<body>
+    <div class="about-container">
+        <header>
+            <h1>About Me</h1>
+        </header>
+        <section class="mission">
+            <p>Just a passionate person about nature and committed to sharing its beauty with the world and digital world. To encourage others to inspire others to appreciate and protect the environment.</p>
+            <p>Lets explore the beauty of the nature of the World and the Digital World.</p>
+        </section>
+        <section class="event-details">
+            <h2>About the Event</h2>
+            <p>The event, <strong>LuxMundi Cup</strong>, was a contest competition of each Department. It was held on November 18 at Tangub City Global College. This event brought together all talented and non-talented students who willingly push themselves of their best while enjoying the fun of playing a competitive games.</p>
+        </section>
+        <section class="experience">
+            <h2>My Experience</h2>
+            <p>During the event, I had the opportunity to participate 3 games as I wanted to play and practice with. It was a memorable experience because of the practice we had in my own team, despite all the failures and pressure we face everyday, we still able to continue our own way to the show. This event taught me how to collaborate, helping others, and most important thing is how to help yourself without needing the help of others.</p>
+        </section>
+        <footer>
+            <br>
+            <p>Thank you for visiting this page! Feel free to learn more about my journey through the events I've participated in.</p>
+            <a href="HomePage.html">Back to Homepage</a>
+        </footer>
+    </div>
+ 
+    <button class="music-button" id="musicButton" onclick="toggleMusic()">Play Music</button>
+    <audio id="musicPlayer" loop hidden></audio>
+
+<script>
+        const musicTracks = [
+        "HinokiWood.mp3.mp3",
+        "Deathcap.mp3.mp3",
+        "Ladyfingers.mp3.mp3",
+        "Aruarian.mp3.mp3"
+    ];
+    
+    const audioPlayer = document.getElementById('musicPlayer');
+    const musicButton = document.getElementById('musicButton');
+    let isPlaying = false;
+    let shuffledTracks = [];
+    let currentTrackIndex = 0;
+    
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+    
+    function loadNextTrack() {
+        if (currentTrackIndex >= shuffledTracks.length) {
+            currentTrackIndex = 0;
+            shuffleArray(shuffledTracks);
+        }
+        audioPlayer.src = shuffledTracks[currentTrackIndex];
+        audioPlayer.play();
+        currentTrackIndex++;
+    }
+    
+    function toggleMusic() {
+        if (isPlaying) {
+            audioPlayer.pause();
+            musicButton.textContent = 'Play Music';
+        } else {
+            if (shuffledTracks.length === 0) {
+                shuffledTracks = [
+                    "HinokiWood.mp3.mp3",
+                    "Deathcap.mp3.mp3",
+                    "Ladyfingers.mp3.mp3",
+                    "Aruarian.mp3.mp3"
+                ];
+                shuffleArray(shuffledTracks);
+            }
+            loadNextTrack();
+            musicButton.textContent = 'Pause Music';
+        }
+        isPlaying = !isPlaying;
+    }
+    
+    audioPlayer.addEventListener('ended', loadNextTrack);
+</script>    
+</body>
+</html>

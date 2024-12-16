@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="GalleryPage.css">
+    <title>Gallery</title>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        <header>
+            <h1>Gallery</h1>
+        </header>
+        <main>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="Cheerdance.jpg" alt="&nbsp;&nbsp;Cheer Dance was my most memorable and greatest dance practice that I participated in my whole life. Despite not winning the expected goal, I am still grateful for how we nailed our dance!">
+                    <p><b>Cheer dance</b></p>
+                </div>
+                <div class="gallery-item">
+                    <img src="Debate.jpg" alt="&nbsp;&nbsp;Debate was my one favorite acedemic contest because of how we talk with authority and also conviction for our own words, that makes our words dangerous like a sword.">
+                    <p><b>Debate</b></p>
+                </div>
+                <div class="gallery-item">
+                    <img src="Chess2.jpg" alt="&nbsp;&nbsp;Chess, one of my childhood games which I often play back in the days, because chess is a challenging game that invovled critical thinking and stragetic mind in order to win the board.">
+                    <p><b>Chess</b></p>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 LuxMundi-Cup | All Rights Reserved</p>
+        </footer>
+    </div>
+    <a href="HomePage.html"><b>Back to Homepage</b></a>
+
+    <div class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img src="" alt="">
+        <p class="lightbox-caption"></p>
+    </div>
+
+    <button class="music-button" id="musicButton" onclick="toggleMusic()">Play Music</button>
+    <audio id="musicPlayer" loop hidden></audio>
+
+    <script>
+    const musicTracks = [
+    "HinokiWood.mp3.mp3",
+    "Deathcap.mp3.mp3",
+    "Ladyfingers.mp3.mp3",
+    "Aruarian.mp3.mp3"
+];
+
+const audioPlayer = document.getElementById('musicPlayer');
+const musicButton = document.getElementById('musicButton');
+let isPlaying = false;
+let shuffledTracks = [];
+let currentTrackIndex = 0;
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function loadNextTrack() {
+    if (currentTrackIndex >= shuffledTracks.length) {
+        currentTrackIndex = 0;
+        shuffleArray(shuffledTracks);
+    }
+    audioPlayer.src = shuffledTracks[currentTrackIndex];
+    audioPlayer.play();
+    currentTrackIndex++;
+}
+
+function toggleMusic() {
+    if (isPlaying) {
+        audioPlayer.pause();
+        musicButton.textContent = 'Play Music';
+    } else {
+        if (shuffledTracks.length === 0) {
+            shuffledTracks = [
+                "HinokiWood.mp3.mp3",
+                "Deathcap.mp3.mp3",
+                "Ladyfingers.mp3.mp3",
+                "Aruarian.mp3.mp3"
+            ];
+            shuffleArray(shuffledTracks);
+        }
+        loadNextTrack();
+        musicButton.textContent = 'Pause Music';
+    }
+    isPlaying = !isPlaying;
+}
+
+audioPlayer.addEventListener('ended', loadNextTrack);
+
+        document.querySelectorAll('.gallery-item img').forEach(image => {
+            image.addEventListener('click', () => {
+                const lightbox = document.querySelector('.lightbox');
+                const lightboxImage = lightbox.querySelector('img');
+                const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+                
+                lightboxImage.src = image.src;
+                lightboxCaption.textContent = image.alt;
+                lightbox.classList.add('active');
+            });
+        });
+
+        document.querySelector('.lightbox-close').addEventListener('click', () => {
+            document.querySelector('.lightbox').classList.remove('active');
+        });
+    </script>
+</body>
+</html>
