@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="LoginPage.css">
+    <link rel="icon" type="image/png" href="ICS.jpg">
+    <title>Luna</title>
+</head>
+<body>
+    <div class="login-container">
+        <h1>LOGIN</h1>
+        <input id="user" type="text" placeholder="Username" required>
+        <input id="pass" type="password" placeholder="Password" required>
+        <div class="checkbox-container">
+            <input type="checkbox" id="showPass" onclick="togglePasswordVisibility()">
+            <label for="showPass">Show Password</label>
+        </div>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <button class="music-button" id="musicButton" onclick="toggleMusic()">Play Music</button>
+    <audio id="musicPlayer" loop hidden></audio>
+
+    <script>
+        const musicTracks = [
+            "HinokiWood.mp3.mp3",
+            "Deathcap.mp3.mp3",
+            "Ladyfingers.mp3.mp3",
+            "Aruarian.mp3.mp3"
+        ];
+
+        const audioPlayer = document.getElementById('musicPlayer');
+        const musicButton = document.getElementById('musicButton');
+        let isPlaying = false;
+        let shuffledTracks = [];
+        let currentTrackIndex = 0;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function loadNextTrack() {
+            if (currentTrackIndex >= shuffledTracks.length) {
+                currentTrackIndex = 0;
+                shuffleArray(shuffledTracks);
+            }
+            audioPlayer.src = shuffledTracks[currentTrackIndex];
+            audioPlayer.play();
+            currentTrackIndex++;
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                musicButton.textContent = 'Play Music';
+            } else {
+                if (shuffledTracks.length === 0) {
+                    shuffledTracks = [...musicTracks];
+                    shuffleArray(shuffledTracks);
+                }
+                loadNextTrack();
+                musicButton.textContent = 'Pause Music';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        audioPlayer.addEventListener('ended', loadNextTrack);
+
+        function login() {
+            const username = document.getElementById('user').value;
+            const password = document.getElementById('pass').value;
+
+            if (username === 'Luna' && password === 'Dave') {
+                window.location.href = 'HomePage.html';
+            } else {
+                alert('Incorrect username or password');
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('pass');
+            passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+        }
+    </script>
+</body>
+</html>
